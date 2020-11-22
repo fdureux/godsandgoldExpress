@@ -1,12 +1,12 @@
 const express = require("express");
+const godsRoutes = require("./gods");
+const usersRoutes = require("./users");
+const offeringsRoutes = require("./offerings");
+
 const router = express.Router();
 
-const gods = require("./gods");
-const users = require("./users");
-const offerings = require("./offerings");
-
-router.use("/gods", gods);
-router.use("/users", users);
-router.use("/offerings", offerings);
+router.use("/gods", godsRoutes);
+router.use("/users", usersRoutes);
+router.use("/offerings", offeringsRoutes);
 
 module.exports = router;
