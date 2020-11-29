@@ -1,30 +1,17 @@
 const express = require("express");
-const router = express.Router();
-const connection = require("../config");
+const { getAllGods, getGodById } = require("../controllers/gods");
+const makeResponse = require("../util/routeHelper");
 
-router.get("/", (req, res) => {
-  connection.query("SELECT * FROM god", (err, results) => {
-    if (err) {
-      res.sendStatus(500);
-    } else {
-      res.json(results);
-    }
-  });
+const router = express.Router();
+
+router.get("/", (_, response) => {
+  const result = getAllGods();
+  makeResponse(response, result);
 });
 
-router.get("/:id/offerings", (req, res) => {
-  const id = req.params.id;
-  connection.query(
-    "SELECT * FROM gift WHERE god_id = ?",
-    [id],
-    (err, results) => {
-      if (err) {
-        res.sendStatus(500);
-      } else {
-        res.json(results);
-      }
-    }
-  );
+router.get("/:id", (request, response) => {
+  const result = getGodById(request.params.id);
+  makeResponse(response, result);
 });
 
 module.exports = router;
